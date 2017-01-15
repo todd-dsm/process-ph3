@@ -173,7 +173,6 @@ clean_up() {
     ###---
     ### Echo all elements in the array
     ###---
-    printf '%s\n'
     for stateFile in "${currentState[@]}"; do
         if [[ -s "$stateFile" ]]; then
             printf '%s\n' "  zeroing-out: $stateFile"
@@ -224,7 +223,7 @@ while :; do
                 shift 2
                 break
             ;;
-        -v|--verbose)
+        -v | --verbose)
             #verbose=$((verbose + 1))
             debug_ouput
             ;;
