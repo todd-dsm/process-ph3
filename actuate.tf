@@ -28,7 +28,6 @@ resource "aws_key_pair" "builder" {
 resource "aws_instance" "mobydock" {
   # Debian Jessie Server 8.6 (HVM), SSD Volume Type in us-west-2
   ami = "${data.aws_ami.base_ami.id}"    # should find: "ami-bd2b85dd"
-  key_name = "thomas.pub"
   instance_type = "t2.micro"
   vpc_security_group_ids = ["${aws_security_group.mobydock_sg.id}"]
   tags {
