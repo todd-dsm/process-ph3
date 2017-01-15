@@ -1,6 +1,6 @@
 history
 zarchive/
 .DS_Store
-*.log
-*.tfstate
-*.backup
+**.log
+**.tfstate
+**.backup
