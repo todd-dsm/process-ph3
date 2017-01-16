@@ -11,13 +11,18 @@
 # ------------------------------------------------------------------------------
 # CONFIGURE THE AWS CONNECTION AND AUTH
 # ------------------------------------------------------------------------------
-provider "aws" {
-  region = "${var.region}"
-}
+# Initilize Environment Variables
 variable "myIPAddress" {}
+variable "AWS_PROFILE" {}
+
+provider "aws" {
+  region  = "${var.region}"
+}
+
 resource "aws_key_pair" "sysadmin" {
   public_key = "${file("${var.pathKeyPub}")}"
 }
+
 resource "aws_key_pair" "builder" {
   public_key = "${file("${var.pathKeyBuilderPub}")}"
 }
@@ -28,7 +33,7 @@ resource "aws_key_pair" "builder" {
 resource "aws_instance" "mobydock" {
   # Debian Jessie Server 8.6 (HVM), SSD Volume Type in us-west-2
   ami = "${data.aws_ami.base_ami.id}"    # should find: "ami-bd2b85dd"
-  key_name = "thomas.pub"
+  key_name = "${var.AWS_PROFILE}.pub"
   instance_type = "t2.micro"
   vpc_security_group_ids = ["${aws_security_group.mobydock_sg.id}"]
   tags {
