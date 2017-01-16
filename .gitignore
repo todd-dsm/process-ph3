@@ -1,6 +1,4 @@
+.DS_Store
 history
 zarchive/
-.DS_Store
 **.log
-**.tfstate
-**.backup
