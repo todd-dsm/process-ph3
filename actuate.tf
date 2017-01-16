@@ -20,6 +20,7 @@ provider "aws" {
 }
 
 resource "aws_key_pair" "sysadmin" {
+  key_name = "${var.AWS_PROFILE}.pub"
   public_key = "${file("${var.pathKeyPub}")}"
 }
 
@@ -33,8 +34,10 @@ resource "aws_key_pair" "builder" {
 resource "aws_instance" "mobydock" {
   # Debian Jessie Server 8.6 (HVM), SSD Volume Type in us-west-2
   ami = "${data.aws_ami.base_ami.id}"    # should find: "ami-bd2b85dd"
-  key_name = "${var.AWS_PROFILE}.pub"
   instance_type = "t2.micro"
+  # The ssh key used to login to instances;
+  # Refer to 'builder' when moving to Jenkins.
+  key_name = "${aws_key_pair.sysadmin.key_name}"
   vpc_security_group_ids = ["${aws_security_group.mobydock_sg.id}"]
   tags {
     Name = "MobyDock-example"
