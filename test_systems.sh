@@ -176,7 +176,7 @@ clean_up() {
     for stateFile in "${currentState[@]}"; do
         if [[ -s "$stateFile" ]]; then
             printf '%s\n' "  zeroing-out: $stateFile"
-            cat /dev/null > "$stateFile"
+            rm -f "$stateFile"
         fi
     done
     # Remove the log file as well
