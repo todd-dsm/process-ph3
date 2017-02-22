@@ -38,7 +38,12 @@ At the end, the remote system's IP address is saved to `/tmp/rhost.tfout` for co
 A `terraform show | grep 'image_id'` shows that the latest AMI was pulled to build the instance.
 
 To inspect the Instance, login with the output `ip`; example:
+
 `ssh admin@52.11.112.251`
+
+_NOTE: it does take a moment for the instance to become available. Be patnient and retry if it doesn't work immediately._
+
+
 
 Check this instance for configurations imposed during Phase 2, like:
 
