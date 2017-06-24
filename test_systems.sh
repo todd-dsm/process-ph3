@@ -1,24 +1,25 @@
 #!/usr/bin/env bash
-# ------------------------------------------------------------------------------
+# shellcheck disable=SC2181
+# -----------------------------------------------------------------------------
 #  PURPOSE: This script is intended to help Terraform while your public IP
 #           IP address changes; for cunsultants or those without a static
 #           address form their ISPs. It currently supports Terraform apply or
 #           destroy operations.
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #  PREREQS: a) A requisite AMI must exist within the AWS Account.
 #           b) The current directory must contain:
 #              1) *.tf files, OR
 #              2) terraform.tfstate* files.
 #              But it's okay if there are both.
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #  EXECUTE: ./test_systems.sh --opt1 --opt2
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #     TODO: 1)
 #           2)
 #           3)
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   AUTHOR: Todd E Thomas
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #set -x
 
 ###----------------------------------------------------------------------------
@@ -59,6 +60,9 @@ show_help()   {
     -c, --cleanup     After a glitch and manual intervention is required, reset
                       the state and remove the log file from the last run.
                       Example: ./test_systems.sh --cleanup
+
+    -ip, --ip-check   Verify the current gateway address
+                      Example: ./test_systems.sh -ip
 
     -r, --retest      Quickly rebuild a system; calls destroy, then build.
                       Example: ./test_systems.sh -v --retest
@@ -214,6 +218,11 @@ while :; do
             #test_opts "$2"
                 #echo "$#"
                 #echo "$@"
+                shift 2
+                break
+            ;;
+        -ip | --ip-check)   # get the gateway address only
+            getCurrentIP
                 shift 2
                 break
             ;;
